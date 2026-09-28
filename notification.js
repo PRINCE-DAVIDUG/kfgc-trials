@@ -21,43 +21,85 @@ const VAPID_KEY =
 
 export async function enableNotifications() {
 
+  console.log("[KFGC] Starting notification setup...");
+
   if (!("Notification" in window)) {
-    alert("This browser does not support notifications.");
+    console.error("[KFGC] Notifications are not supported.");
     return null;
   }
 
   if (!("serviceWorker" in navigator)) {
-    alert("This browser does not support service workers.");
+    console.error("[KFGC] Service workers are not supported.");
     return null;
   }
 
   try {
 
-    const permission =
-      await Notification.requestPermission();
+    console.log("[KFGC] Notification permission:",
+      Notification.permission
+    );
 
-    if (permission !== "granted") {
-      console.log(
-        "Notification permission:",
-        permission
+    /*
+     * Wait for the existing KFGC service worker.
+     */
+    console.log("[KFGC] Waiting for service worker...");
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+    console.log(
+      "[KFGC] Service worker ready:",
+      registration.scope
+    );
+
+    /*
+     * Request FCM token.
+     */
+    console.log("[KFGC] Requesting FCM token...");
+
+    const tokenPromise = getToken(messaging, {
+      vapidKey: VAPID_KEY,
+      serviceWorkerRegistration: registration
+    });
+
+    /*
+     * Prevent the button from waiting forever.
+     */
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(
+          new Error(
+            "FCM token request timed out after 15 seconds."
+          )
+        );
+      }, 15000);
+    });
+
+    const token =
+      await Promise.race([
+        tokenPromise,
+        timeoutPromise
+      ]);
+
+    console.log(
+      "[KFGC] FCM token received:",
+      token
+    );
+
+    if (!token) {
+      console.error(
+        "[KFGC] Firebase did not return an FCM token."
       );
 
       return null;
     }
 
-    const registration =
-      await navigator.serviceWorker.ready;
-
-    const token =
-      await getToken(messaging, {
-        vapidKey: VAPID_KEY,
-        serviceWorkerRegistration: registration
-      });
-
-    if (!token) {
-      console.log("FCM token was not generated.");
-      return null;
-    }
+    /*
+     * Save token to Firestore.
+     */
+    console.log(
+      "[KFGC] Saving token to Firestore..."
+    );
 
     await setDoc(
       doc(db, "notificationTokens", token),
@@ -73,7 +115,7 @@ export async function enableNotifications() {
     );
 
     console.log(
-      "KFGC notification token registered."
+      "[KFGC] Notification token successfully saved."
     );
 
     return token;
@@ -81,7 +123,7 @@ export async function enableNotifications() {
   } catch (error) {
 
     console.error(
-      "KFGC notification setup failed:",
+      "[KFGC] Notification setup failed:",
       error
     );
 
@@ -90,12 +132,13 @@ export async function enableNotifications() {
 }
 
 
-/* Foreground notifications */
-
+/*
+ * Foreground messages
+ */
 onMessage(messaging, payload => {
 
   console.log(
-    "[KFGC] Foreground notification:",
+    "[KFGC] Foreground notification received:",
     payload
   );
 

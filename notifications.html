@@ -105,59 +105,54 @@
         <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
     </footer>
 
-<script>
-import {
-  enableNotifications
-} from "./notification.js";
+<script type="module">
+  import { enableNotifications } from "./notification.js";
 
+  const button = document.getElementById("enableNotifications");
+  const status = document.getElementById("notificationStatus");
 
-const button =
-  document.getElementById(
-    "enableNotifications"
-  );
-
-const status =
-  document.getElementById(
-    "notificationStatus"
-  );
-
-
-button?.addEventListener(
-  "click",
-  async () => {
+  button?.addEventListener("click", async () => {
 
     button.disabled = true;
+    button.innerHTML = "Enabling notifications...";
 
-    button.textContent =
-      "Enabling notifications...";
+    try {
 
+      const token = await enableNotifications();
 
-    const token =
-      await enableNotifications();
+      if (token) {
 
+        status.textContent =
+          "Notifications are enabled. You will receive KFGC announcements.";
 
-    if (token) {
+        button.innerHTML =
+          "✓ Notifications Enabled";
+
+      } else {
+
+        status.textContent =
+          "Notifications were not enabled.";
+
+        button.disabled = false;
+
+        button.innerHTML =
+          '<i class="fa-solid fa-bell"></i> Enable KFGC Notifications';
+      }
+
+    } catch (error) {
+
+      console.error("KFGC notification error:", error);
 
       status.textContent =
-        "Notifications are enabled. You will receive KFGC announcements.";
-
-      button.textContent =
-        "✓ Notifications Enabled";
-
-    } else {
-
-      status.textContent =
-        "Notifications were not enabled.";
+        "Unable to enable notifications. Please try again.";
 
       button.disabled = false;
 
-      button.textContent =
-        "Enable KFGC Notifications";
-
+      button.innerHTML =
+        '<i class="fa-solid fa-bell"></i> Enable KFGC Notifications';
     }
 
-  }
-);
+  });
 </script>
     <style>
 

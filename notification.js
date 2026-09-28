@@ -1,5 +1,7 @@
 // KFGC Media App — Firebase Cloud Messaging
-console.log("KFGC notification.js LOADED");
+
+console.log("[KFGC] notification.js loaded");
+
 import {
   getToken,
   onMessage
@@ -19,30 +21,64 @@ import {
 const VAPID_KEY =
   "BJuuZ6L63nLgdfYdl3_JgkE0WEhT1TU06nfnVAOYwcHa7EDAgpjXE_WoXpKnXY2wqbZccY1XHw5XrBvKU1FhiAo";
 
+
 export async function enableNotifications() {
 
-  console.log("[KFGC] Starting notification setup...");
-
-  if (!("Notification" in window)) {
-    console.error("[KFGC] Notifications are not supported.");
-    return null;
-  }
-
-  if (!("serviceWorker" in navigator)) {
-    console.error("[KFGC] Service workers are not supported.");
-    return null;
-  }
+  console.log("[KFGC] enableNotifications() started");
 
   try {
 
-    console.log("[KFGC] Notification permission:",
+    /* -----------------------------------------
+       Check browser support
+    ----------------------------------------- */
+
+    if (!("Notification" in window)) {
+      throw new Error(
+        "This browser does not support notifications."
+      );
+    }
+
+    if (!("serviceWorker" in navigator)) {
+      throw new Error(
+        "This browser does not support service workers."
+      );
+    }
+
+
+    /* -----------------------------------------
+       Check permission
+    ----------------------------------------- */
+
+    console.log(
+      "[KFGC] Permission:",
       Notification.permission
     );
 
-    /*
-     * Wait for the existing KFGC service worker.
-     */
-    console.log("[KFGC] Waiting for service worker...");
+    if (Notification.permission !== "granted") {
+
+      const permission =
+        await Notification.requestPermission();
+
+      console.log(
+        "[KFGC] Permission result:",
+        permission
+      );
+
+      if (permission !== "granted") {
+        throw new Error(
+          "Notification permission was not granted."
+        );
+      }
+    }
+
+
+    /* -----------------------------------------
+       Get the existing KFGC service worker
+    ----------------------------------------- */
+
+    console.log(
+      "[KFGC] Waiting for service worker..."
+    );
 
     const registration =
       await navigator.serviceWorker.ready;
@@ -52,57 +88,67 @@ export async function enableNotifications() {
       registration.scope
     );
 
-    /*
-     * Request FCM token.
-     */
-    console.log("[KFGC] Requesting FCM token...");
 
-    const tokenPromise = getToken(messaging, {
-      vapidKey: VAPID_KEY,
-      serviceWorkerRegistration: registration
-    });
+    /* -----------------------------------------
+       Verify Firebase Messaging
+    ----------------------------------------- */
 
-    /*
-     * Prevent the button from waiting forever.
-     */
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => {
-        reject(
-          new Error(
-            "FCM token request timed out after 15 seconds."
-          )
-        );
-      }, 15000);
-    });
-
-    const token =
-      await Promise.race([
-        tokenPromise,
-        timeoutPromise
-      ]);
-
-    console.log(
-      "[KFGC] FCM token received:",
-      token
-    );
-
-    if (!token) {
-      console.error(
-        "[KFGC] Firebase did not return an FCM token."
+    if (!messaging) {
+      throw new Error(
+        "Firebase Messaging was not initialized."
       );
-
-      return null;
     }
 
-    /*
-     * Save token to Firestore.
-     */
+    console.log(
+      "[KFGC] Firebase Messaging initialized."
+    );
+
+
+    /* -----------------------------------------
+       Request FCM token
+    ----------------------------------------- */
+
+    console.log(
+      "[KFGC] Requesting FCM token..."
+    );
+
+    const token =
+      await getToken(messaging, {
+        vapidKey: VAPID_KEY,
+        serviceWorkerRegistration: registration
+      });
+
+    console.log(
+      "[KFGC] getToken() completed."
+    );
+
+
+    if (!token) {
+      throw new Error(
+        "Firebase returned an empty FCM token."
+      );
+    }
+
+
+    console.log(
+      "[KFGC] FCM token successfully generated."
+    );
+
+
+    /* -----------------------------------------
+       Save token to Firestore
+    ----------------------------------------- */
+
     console.log(
       "[KFGC] Saving token to Firestore..."
     );
 
     await setDoc(
-      doc(db, "notificationTokens", token),
+      doc(
+        db,
+        "notificationTokens",
+        token
+      ),
       {
         token: token,
         platform: "web",
@@ -114,11 +160,13 @@ export async function enableNotifications() {
       }
     );
 
+
     console.log(
-      "[KFGC] Notification token successfully saved."
+      "[KFGC] FCM token saved to Firestore."
     );
 
     return token;
+
 
   } catch (error) {
 
@@ -132,44 +180,58 @@ export async function enableNotifications() {
 }
 
 
-/*
- * Foreground messages
- */
-onMessage(messaging, payload => {
+/* -----------------------------------------
+   Foreground messages
+----------------------------------------- */
 
-  console.log(
-    "[KFGC] Foreground notification received:",
-    payload
-  );
+onMessage(
+  messaging,
+  payload => {
 
-  const title =
-    payload.notification?.title ||
-    payload.data?.title ||
-    "KFGC Media App";
+    console.log(
+      "[KFGC] Foreground message:",
+      payload
+    );
 
-  const body =
-    payload.notification?.body ||
-    payload.data?.body ||
-    "You have a new KFGC update.";
+    const title =
+      payload.notification?.title ||
+      payload.data?.title ||
+      "KFGC Media App";
 
-  const url =
-    payload.data?.url ||
-    "./index.html";
+    const body =
+      payload.notification?.body ||
+      payload.data?.body ||
+      "You have a new KFGC update.";
 
-  if (Notification.permission === "granted") {
+    const url =
+      payload.data?.url ||
+      "./index.html";
 
-    const notification =
-      new Notification(title, {
-        body: body,
-        icon: "./icons/icon-192.png",
-        data: {
-          url: url
-        }
-      });
 
-    notification.onclick = () => {
-      window.location.href = url;
-    };
+    if (
+      Notification.permission === "granted"
+    ) {
+
+      const notification =
+        new Notification(
+          title,
+          {
+            body: body,
+            icon: "./icons/icon-192.png",
+            data: {
+              url: url
+            }
+          }
+        );
+
+
+      notification.onclick = () => {
+
+        window.location.href = url;
+
+      };
+
+    }
+
   }
-
-});
+);

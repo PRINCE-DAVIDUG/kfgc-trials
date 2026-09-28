@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonials-KFGC MEDIA APP</title>
+<link rel="stylesheet" href="testimonials.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+<!-- Main script -->
+  <script src="script.js" defer></script>
+<script src="theme.js" defer></script>  
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <a href="javascript:history.back()" class="back-button">← Back</a>
+    <div class="logo">
+        <img src="kfgc.jpg" alt="Church Logo">
+    </div>
+</header>
+
+
+    <div class="text-center mb-4">
+        <h1>Hear What Our Members</h1>
+        <h1>Hear What Our Members Say</h1>
+        <p>Stories of faith, growth, and community from our beloved members.</p>
+    </div>
+  <main class="wrapper">
+
+  <!-- SUBMIT FORM -->
+  <section class="form-card">
+    <h2>🙏 Share Your Testimony</h2>
+
+    <form id="testimonial-form">
+      <input type="text" id="member-name" placeholder="Your Name" required>
+      <textarea id="testimonial-message" placeholder="Share what God has done..." required></textarea>
+      <input type="file" id="testimonial-image" accept="image/*">
+      <button type="submit">Submit Testimony</button>
+    </form>
+  </section>
+
+  <!-- TESTIMONIES -->
+  <section>
+    <h2 class="section-title">💬 Testimonies</h2>
+    <div id="testimonial-cards" class="cards"></div>
+  </section>
+
+  </main>
+<footer class="footer">
+      
+    <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
+</footer>
+
+<script src="testimonials.js"></script>
+</body>
+  </html>

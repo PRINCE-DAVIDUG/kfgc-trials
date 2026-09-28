@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bible — KFGC MEDIA APP</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  
+  <style>
+ /* HEADER */
+.header {
+    background-color: #0A1A44; /* Navy Blue */
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content:space-between;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1200;
+}
+.logo img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.h {
+    text-align: rigt;
+}
+.back-button {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+    color: goldenrod;
+    text-decoration: none;
+}
+    /* FOOTER */
+.footer {
+    background-color: #0A1A44;
+    color: white;
+    padding: 12px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    left: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer a {
+    color: gold;
+    font-weight: bold;
+    text-decoration: none;
+}
+    
+   .search-box { margin-top: 100px; display:flex; gap:10px; margin-bottom:15px; }
+  input[type=text] { flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; }
+  button { padding:10px 20px; border:none; border-radius:8px; background:var(--gold); cursor:pointer; font-weight:600; }
+  button:hover { background:#f0c961; }
+  .verse-container { background:#fff; padding:15px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,.1); margin-bottom:15px; }
+  .verse-text { font-size:1rem; line-height:1.6; }
+  .verse-ref { font-weight:700; margin-bottom:8px; display:block; color:var(--navy); }
+  .msg { text-align:center; color:red; font-weight:600; margin-bottom:10px; }
+</style>
+</head>
+<body>
+<header class="header">
+    <a href="javascript:history.back()" class="back-button">← Back</a>
+    <div class="logo">
+        <img src="kfgc.jpg" alt="Church Logo">
+        </div>
+    <h>KFGC BIBLE</h>
+
+</header>
+<main>
+  <div class="msg" id="msg"></div>
+
+  <!-- Search Box -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Enter book chapter:verse e.g., John 3:16">
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <!-- Verse of the Day -->
+  <div class="verse-container">
+    <span class="verse-ref" id="dailyRef">Verse of the Day</span>
+    <span class="verse-text" id="dailyText">Loading...</span>
+  </div>
+
+  <!-- Search Results -->
+  <div id="searchResults"></div>
+</main>
+  
+<footer class="footer">
+  <p>&copy; 2026 KFGC Media App. All Rights Reserved.</p>
+</footer>
+    
+<script type="module" src="bible.js"></script>
+</body>
+</html>

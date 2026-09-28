@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Sermons-KFGC MEDIA APP </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<script src="theme.js" defer></script>
+
+  <style>
+    :root {
+      --primary: #08203a;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #222;
+      --muted: #666;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    header h1 { margin: 0; font-size: 1.4rem; }
+    header p { margin: .3rem 0 0; font-size: .9rem; opacity: .9; }
+
+    main {
+      max-width: 900px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .search-container {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .search-container input {
+      width: 80%;
+      padding: .6rem 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .sermon {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    }
+
+    .sermon h3 { margin: 0 0 .3rem; font-size: 1.1rem; }
+    .meta { font-size: .85rem; color: var(--muted); margin-bottom: .6rem; }
+    audio { width: 100%; outline: none; margin-bottom: .5rem; }
+
+    .download-btn {
+      display: inline-block;
+      padding: .4rem .8rem;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: .85rem;
+    }
+  .header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #08203a;
+  color: #ffffff;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+  .logo img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.back-button {
+  color: #d9a441;
+  text-decoration: none;
+  font-weight: 600;
+}
+  
+    .status { text-align: center; padding: 2rem; color: var(--nav); }
+    footer { text-align: center; padding: 1rem; font-size: .8rem; color: var(--muted); background-color: #08203a; }
+  </style>
+</head>
+
+<body>
+<header class="header">
+  <a href="javascript:history.back()" class="back-button">← Back</a>
+  <div class="logo">
+    <img src="kfgc.jpg" alt="Church Logo">
+    <p>KFGC Audio Sermons</p>
+  </div> 
+</header>
+
+<main>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search sermons by title..." />
+  </div>
+  <div id="sermonList">
+    <div class="status">Loading sermons…</div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
+</footer>
+</footer>
+
+<script>
+  // ✅ Your Apps Script /exec URL
+  const API_URL = "https://script.google.com/macros/s/AKfycbxTCTcgh9x-JWh-3Zy6NjXgW-_52fhJpbk_KevClMdfZG1pZdlMaeobrTpf_orMyL8y/exec";
+
+  const list = document.getElementById("sermonList");
+  const searchInput = document.getElementById("searchInput");
+  let sermonsData = [];
+
+  // Fetch sermons from Apps Script
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      sermonsData = data;
+      if (!Array.isArray(data) || data.length === 0) {
+        list.innerHTML = "<div class='status'>No sermons available.</div>";
+        return;
+      }
+      renderSermons(sermonsData);
+    })
+    .catch(() => {
+      list.innerHTML = "<div class='status'>Failed to load sermons.</div>";
+    });
+
+  // Render sermons on page
+  function renderSermons(sermons) {
+    list.innerHTML = "";
+    sermons.forEach(sermon => {
+      // Streaming link for audio
+      const audioUrl = `https://docs.google.com/uc?export=open&id=${sermon.fileId}`;
+      // Direct download link
+      const downloadUrl = `https://drive.google.com/uc?export=download&id=${sermon.fileId}`;
+
+      const card = document.createElement("div");
+      card.className = "sermon";
+
+      card.innerHTML = `
+        <h3>${sermon.title}</h3>
+        <div class="meta">${sermon.preacher || ""} · ${sermon.date}</div>
+        <audio controls preload="none">
+          <source src="${audioUrl}" type="audio/mpeg">
+          Your browser does not support audio playback.
+        </audio>
+        <a class="download-btn" href="${downloadUrl}" target="_blank">Download</a>
+      `;
+
+      list.appendChild(card);
+    });
+  }
+
+  // Search sermons
+  searchInput.addEventListener("input", function() {
+    const query = this.value.toLowerCase();
+    const filtered = sermonsData.filter(s => s.title.toLowerCase().includes(query));
+    if (filtered.length === 0) {
+      list.innerHTML = "<div class='status'>No matching sermons found.</div>";
+    } else {
+      renderSermons(filtered);
+    }
+  });
+</script>
+
+</body>
+</html>

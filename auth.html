@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Sign Up — KFGC MEDIA APP</title>
+  <link rel="stylesheet" href="auth.css">
+   <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+  
+  <main class="auth-main">
+   <img src="kfgc.jpg" alt="KFGC Media App Logo" loading="lazy">
+  <div>
+    <h2>LOGIN TO KFGC MEDIA APP</h2>
+    <p> ....and teach them all I have taught you. </br> MATHEW 28:20 </p>
+    </div>
+    <div class="auth-card">
+      <div class="auth-toggle">
+        <button id="loginTab" class="active">Login</button>
+        <button id="signupTab">Sign Up</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" class="auth-form active">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+         <p1><a href="forgot-password.html">Forgot Password?</a></p1>
+        <button type="submit">Login</button>
+        <p id="loginMsg"></p>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="signupForm" class="auth-form">
+        <input type="text" id="signupName" placeholder="Full Name" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+         <input type="tel" id="signupTel" placeholder="Phone" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+        <p id="signupMsg"></p>
+      </form>
+     <div class="link-button">
+            <a href="terms.html">Terms & Conditions Apply</a>
+      </div>
+    </div>
+<!-- FLOATING WHATSAPP CHAT BUTTON -->
+    <a href="https://wa.me/256706817126" class="floating-chat">
+    💬 <h6>contact</br>developer</h6>
+</a>
+    
+  </main>
+
+  <script src="auth.js" type="module"></script>
+</body>
+</html>

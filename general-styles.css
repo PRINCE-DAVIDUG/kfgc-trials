@@ -1,0 +1,407 @@
+/* GENERAL PAGE */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    padding-top: 80px; /* Prevent header overlap */
+    padding-bottom: 90px; /* Prevent footer overlap */
+    background: #f8f8f8;
+}
+
+/* HEADER */
+.header {
+    background-color: #0A1A44; /* Navy Blue */
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content:space-between;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1200;
+}
+.logo img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.back-button {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+    color: goldenrod;
+    text-decoration: none;
+}
+
+/* HERO SECTION */
+.hero img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid gold;
+}
+
+/* ABOUT US */
+.about-us {
+    padding: 20px;
+    background: white;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.about-us h1 {
+    color: #0A1A44;
+    font-size: 28px;
+}
+
+.about-us p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    background: gold;
+    color: #0A1A44;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #0A1A44;
+    color: white;
+    padding: 12px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    left: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer a {
+    color: gold;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+/* GLOBAL PAGE STYLING */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f8ff;
+}
+
+/* SECTIONS */
+.contact-page {
+    padding: 90px 20px 90px;
+}
+
+.contact-section {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 24px;
+    color: purple;
+}
+
+.divider {
+    width: 60px;
+    height: 4px;
+    background: orange;
+    margin: 8px auto 15px;
+}
+
+/* MAP BOX */
+.map-box iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+}
+
+/* CARDS */
+.info-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.info-card {
+    background: green;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+}
+
+.info-card h3 {
+    color: #e66922;
+}
+
+/* SOCIAL LINKS */
+.social-links a {
+    color: red;
+    font-weight: bold;
+}
+
+/* FORM */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.contact-form button {
+    background: purple;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* ANIMATED BOXES */
+.animated-box {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* FLOATING WHATSAPP BUTTON */
+.floating-chat {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: #25D366;
+    padding: 15px 18px;
+    border-radius: 50%;
+    font-size: 28px;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+/* DOWNLOAD PAGE STYLES */
+.download-area {
+    margin: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.download-area h1 {
+    color: #0A1A44;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.download-area p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Download Buttons */
+.download-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.download-buttons img {
+    width: 180px;
+    transition: transform 0.3s ease;
+}
+
+.download-buttons img:hover {
+    transform: scale(1.05);
+}
+
+/* App Screenshot */
+.app-screenshot img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 15px;
+    border: 2px solid gold;
+}
+/* ============================
+   FAQ PAGE STYLES
+============================ */
+
+.faq-container {
+    max-width: 900px;
+    margin: 100px auto 120px;
+    padding: 20px;
+}
+
+.faq-container h2 {
+    text-align: center;
+    color: #0A1A44;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.faq-search {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq-search input {
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+
+/* FAQ Items */
+.faq-item {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.faq-item button {
+    width: 100%;
+    padding: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-item .answer {
+    display: none;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+.faq-item.active .answer {
+    display: block;
+}
+
+/* Icons animation */
+.faq-item.active button i {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
+
+/* Dark mode */
+.dark .faq-item {
+    background: #2e2e2e;
+    color: #fff;
+}
+
+.dark .faq-search input {
+    background: #444;
+    border: 1px solid #666;
+    color: white;
+}
+/* ===============================
+   GLOBAL DARK MODE
+   =============================== */
+
+.dark-toggle {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--navy, #08203a);
+}
+
+/* Base */
+body.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Headers */
+body.dark header,
+body.dark .header {
+  background: #020617;
+}
+
+/* Cards / Sections */
+body.dark section,
+body.dark .card,
+body.dark .container {
+  background: #020617;
+}
+
+/* Text */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p,
+body.dark span,
+body.dark label {
+  color: #e5e7eb;
+}
+
+/* Inputs */
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: #020617;
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+/* Tables */
+body.dark table {
+  background: #020617;
+}
+
+body.dark th {
+  background: #08203a;
+  color: #fff;
+}
+
+body.dark td {
+  border-color: #334155;
+}
+
+/* Links */
+body.dark a {
+  color: #d9a441;
+}
+
+/* Footer */
+body.dark footer {
+  background: #020617;
+  color: #cbd5f5;
+}

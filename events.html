@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events – KFGC Media App</title>
+
+<!-- FullCalendar -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="theme.js" defer></script>
+<link rel="stylesheet" href="styles.css">
+<!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --navy:#0A1A44;
+  --gold:#d9a441;
+  --light:#f4f6f9;
+  --radius:14px;
+  --shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--light);color:#222;line-height:1.6;}
+.header{background:var(--navy);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;}
+.back-button{color:var(--gold);text-decoration:none;font-weight:600;}
+.logo img{width:42px;height:42px;border-radius:50%;object-fit:cover;}
+.hero{background:linear-gradient(rgba(10,26,68,.75),rgba(10,26,68,.75)),url("https://images.unsplash.com/photo-1520975698519-2a1e57f35e21?auto=format&fit=crop&w=1350&q=80") center/cover no-repeat;padding:3rem 1rem;text-align:center;color:#fff;}
+.hero h1{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--gold);}
+.hero p{max-width:600px;margin:.5rem auto 0;opacity:.95;}
+.search-filter{max-width:1100px;margin:1.5rem auto;padding:0 1rem;display:grid;grid-template-columns:1fr 180px 180px;gap:.7rem;}
+.search-filter input, .search-filter select, .search-filter button{padding:.6rem .7rem;border-radius:10px;border:1px solid #ccc;}
+.sort-btn{background:var(--gold);color:var(--navy);border:none;font-weight:700;cursor:pointer;}
+.events{max-width:1100px;margin:auto;padding:0 1rem;}
+#calendar{background:#fff;padding:1rem;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:2rem;}
+.fc-toolbar-title{color:var(--navy);font-weight:700;}
+.fc-button{background:var(--navy)!important;border:none!important;}
+.fc-button-primary:not(:disabled).fc-button-active{background:var(--gold)!important;color:#000!important;}
+.event-cards{max-width:1100px;margin:2rem auto 3rem;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
+.event-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:.25s;}
+.event-card:hover{transform:translateY(-5px);}
+.event-card img{width:100%;height:180px;object-fit:cover;}
+.event-card-content{padding:1rem;}
+.event-card h3{color:var(--navy);font-size:1.1rem;}
+.tag{display:inline-block;margin-top:.4rem;padding:4px 10px;font-size:.75rem;border-radius:6px;color:#fff;}
+.tag.Prayer{background:#4b7bec;}
+.tag.Worship{background:#2ecc71;}
+.tag.Youth{background:#ff9800;}
+.footer{background:var(--navy);color:#fff;text-align:center;padding:1.2rem;}
+.footer a{color:var(--gold);text-decoration:none;}
+@media(max-width:768px){.search-filter{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="javascript:history.back()" class="back-button">← Back</a>
+  <div class="logo"><img src="kfgc.jpg" alt="KFGC"></div>
+</header>
+
+<section class="hero">
+  <h1>Church Events & Programs</h1>
+  <p>Stay connected with upcoming services, prayers, and fellowships</p>
+</section>
+
+<div class="search-filter">
+  <input id="searchInput" placeholder="Search events…">
+  <select id="categoryFilter">
+    <option value="all">All Categories</option>
+    <option value="Prayer">Prayer</option>
+    <option value="Worship">Worship</option>
+    <option value="Youth">Youth</option>
+  </select>
+  <button id="sortBtn" class="sort-btn">Sort by Date ↑</button>
+</div>
+
+<section class="events">
+  <div id="calendar"></div>
+</section>
+
+<div class="event-cards" id="eventCards"></div>
+
+<footer class="footer">
+  <p>&copy; 2026 KFGC Media App</p>
+</footer>
+
+<script>
+// ===== EVENTS LOGIC =====
+let sortAsc = true;
+
+function getEvents(){
+  return JSON.parse(localStorage.getItem("kfgcEvents")) || [];
+}
+
+// Calendar
+const calendar = new FullCalendar.Calendar(document.getElementById("calendar"),{
+  initialView:"dayGridMonth",
+  height:"auto",
+  events:getEvents()
+});
+calendar.render();
+
+// Cards
+const cards = document.getElementById("eventCards");
+const search = document.getElementById("searchInput");
+const filter = document.getElementById("categoryFilter");
+const sortBtn = document.getElementById("sortBtn");
+
+function renderCards(){
+  cards.innerHTML="";
+  let data = [...getEvents()];
+
+  if(search.value){
+    data = data.filter(e=>e.title.toLowerCase().includes(search.value.toLowerCase()));
+  }
+  if(filter.value!=="all"){
+    data = data.filter(e=>e.category===filter.value);
+  }
+
+  data.sort((a,b)=>sortAsc?new Date(a.date)-new Date(b.date):new Date(b.date)-new Date(a.date));
+
+  data.forEach(e=>{
+    cards.innerHTML+=`
+      <div class="event-card">
+        <img src="${e.image || 'https://images.unsplash.com/photo-1520975698519-2a1e57f35e21?auto=format&fit=crop&w=1350&q=80'}">
+        <div class="event-card-content">
+          <h3>${e.title}</h3>
+          <p><strong>Date:</strong> ${e.date}</p>
+          <p>${e.description}</p>
+          <span class="tag ${e.category}">${e.category}</span>
+        </div>
+      </div>
+    `;
+  });
+}
+
+search.oninput = renderCards;
+filter.onchange = renderCards;
+sortBtn.onclick = ()=>{
+  sortAsc=!sortAsc;
+  sortBtn.textContent = sortAsc ? "Sort by Date ↑" : "Sort by Date ↓";
+  renderCards();
+};
+
+// Initial render
+renderCards();
+
+// Update calendar dynamically
+setInterval(()=>{
+  calendar.removeAllEvents();
+  calendar.addEventSource(getEvents());
+}, 2000);
+</script>
+
+</body>
+</html>

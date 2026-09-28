@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFGC Prayer Request</title>
+    <!-- Main script -->
+  <script src="script.js" defer></script>
+<!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+<style>
+    /* =========================================================
+   KFGC Prayer Request — Restyled
+   Theme: Navy Blue & Gold
+   ========================================================= */
+
+/* Page spacing fix for fixed header */
+body {
+  padding-top: 40px;
+  background: #f4f6fa;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, #08203a, #0a1a44);
+  color: #ffffff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 1200;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.back-button {
+  position: absolute;
+  left: 14px;
+  color: #d9a441;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.logo img {
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid #d9a441;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 520px;
+  margin: 2.5rem auto;
+  padding: 1rem;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 2rem 1.8rem;
+  box-shadow: 0 20px 40px rgba(8, 32, 58, 0.15);
+}
+
+.card h3 {
+  text-align: center;
+  color: #08203a;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== FORM ===== */
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.95rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #d9a441;
+  box-shadow: 0 0 0 3px rgba(217, 164, 65, 0.25);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ===== BUTTON ===== */
+button {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #d9a441, #f2c46d);
+  color: #08203a;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(217, 164, 65, 0.5);
+}
+
+button:disabled {
+  background: #cbd5e1;
+  color: #6b7280;
+  box-shadow: none;
+}
+
+/* ===== MESSAGES ===== */
+.msg {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  display: none;
+}
+
+.success {
+  color: #15803d;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  margin-top: 3rem;
+  background: #06182c;
+  color: #ffffff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.footer a {
+  color: #d9a441;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer p {
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .card {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .card h3 {
+    font-size: 1.4rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="javascript:history.back()" class="back-button">← Back</a>
+        <div class="logo">
+            <img src="kfgc.jpg" alt="Church Logo">
+        </div>
+    </header>
+<div class="container">
+  <div class="card">
+<h3>Submit Prayer Request</h3>
+    <form id="prayerForm">
+      <label>Name (optional)</label>
+      <input id="prayer_name" placeholder="Your name">
+
+      <label>Contact (optional)</label>
+      <input id="contact" placeholder="Phone number">
+
+      <label>Email (optional)</label>
+      <input id="email" placeholder="Email address">
+
+      <label>Prayer Request *</label>
+      <textarea id="request" required></textarea>
+
+      <button id="btn" type="submit">Submit Prayer</button>
+
+      <div class="msg success" id="ok">🙏 Prayer submitted successfully</div>
+      <div class="msg error" id="fail">❌ Submission failed</div>
+    </form>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbxGuLzNgt_GNPRh2250O8HPD88sO0Y-MJV_vhcQ9zszjVTousiEL8RlT2zwje6Yx2jvkw/exec";
+
+const form = document.getElementById("prayerForm");
+const btn = document.getElementById("btn");
+const ok = document.getElementById("ok");
+const fail = document.getElementById("fail");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  ok.style.display = fail.style.display = "none";
+
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
+
+  const payload = {
+    name: document.getElementById("prayer_name").value.trim(),
+    contact: document.getElementById("contact").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    "prayer request": document.getElementById("request").value.trim()
+  };
+
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      ok.style.display = "block";
+      form.reset();
+    } else {
+      fail.style.display = "block";
+      console.error(data.error);
+    }
+
+  } catch (err) {
+    console.error(err);
+    fail.style.display = "block";
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Submit Prayer";
+});
+</script>
+<footer class="footer">
+        <p>
+            Follow us on 
+            <a href="https://whatsapp.com/channel/0029VaoQRhnHwXb9FX0Ub503">WhatsApp</a> |
+            <a href="https://www.youtube.com/@KIRINDAFULLGOSPELCHURCHNYENDO">YouTube</a> |
+             <a href="https://www.facebook.com/profile.php?id=61579066273777">Facebook</a> |  
+            <a href="https://t.me/+wJRnn7SQvehhZTFk">Telegram</a> |
+            <a href="https://www.tiktok.com/@kirindafullgospel">TikTok</a>
+        </p>
+        <p>&copy; 2025 KFGC MEDIA APP. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

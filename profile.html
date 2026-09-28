@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Profile — KFGC MEDIA APP</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+
+      <!-- Brand -->
+      <a href="index.html" class="brand">
+        <img src="kfgc.jpg" alt="KFGC Media App Logo" class="logo">
+        <span class="brand-text">KFGC MEDIA APP</span>
+      </a>
+
+      <!-- Navigation -->
+      <nav id="primary-nav" class="primary-nav">
+        <ul>
+          <li><a href="about-us.html"><i class="fa-solid fa-church"></i> About Us</a></li>
+          <li><a href="services.html"><i class="fa-solid fa-hands-praying"></i> Services</a></li>
+          <li><a href="sermons.html"><i class="fa-solid fa-broadcast-tower"></i> Sermons</a></li>
+          <li><a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events</a></li>
+          <li><a href="donate.html"><i class="fa-solid fa-heart"></i> Donate</a></li>
+          <li id="adminMenu" style="display:none;"><a href="admin.html"><i class="fa-solid fa-bell"></i> OFFICIAL USE ONLY</a></li>
+        </ul>
+      </nav>
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <a href="profile.html">
+          <img id="headerDp" src="user.jpg" alt="Profile" class="profile-img">
+        </a>
+        <span id="headerName">Member</span>
+        <button id="logoutBtn" class="btn danger">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Profile -->
+  <main class="profile-main">
+    <div class="profile-card">
+      <h2>My Profile</h2>
+
+      <form id="profileForm">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter full name" required>
+
+        <label for="dp">Profile Picture</label>
+        <input type="file" id="dp" accept="image/*">
+
+        <div class="dp-preview-container">
+          <img id="dpPreview" src="user.jpg" alt="DP Preview" class="profile-img">
+        </div>
+
+        <progress id="uploadProgress" value="0" max="100" style="width:100%; display:none;"></progress>
+
+        <button type="submit" class="btn">Update Profile</button>
+      </form>
+
+      <p id="msg"></p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="terms.html">Terms & Conditions</a>
+
+      <div class="footer-center">
+        <p>Follow us</p>
+        <nav class="social">
+          <a href="https://whatsapp.com/channel/0029VaoQRhnHwXb9FX0Ub503" target="_blank" rel="noopener"><img src="whatsapp.jpg" alt="WhatsApp"></a>
+          <a href="https://www.youtube.com/@KIRINDAFULLGOSPELCHURCHNYENDO" target="_blank" rel="noopener"><img src="youtube-icon.png" alt="YouTube"></a>
+          <a href="https://www.tiktok.com/@kirindafullgospel" target="_blank" rel="noopener"><img src="tiktok.png" alt="TikTok"></a>
+          <a href="https://www.facebook.com/profile.php?id=61579066273777" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
+          <a href="https://t.me/+wJRnn7SQvehhZTFk" target="_blank" rel="noopener"><img src="telegram.jpg" alt="Telegram"></a>
+          <a href="https://kirindafullgospelchurchnyendo-rgb.github.io/kfgc-media-app/" target="_blank" rel="noopener"><img src="share.jpg" alt="App"></a>
+          <a href="https://maps.app.goo.gl/v8nPT1WvCGwSKiQF9" target="_blank" rel="noopener"><img src="location.jpg" alt="Location"></a>
+        </nav>
+      </div>
+
+      <div class="footer-right">
+        <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="auth-guard.js"></script>
+  <script type="module" src="header.js"></script>
+  <script type="module" src="profile.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications-KFGC MEDIA APP</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Main script -->
+  <script src="script.js" defer></script>
+<!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+<script src="theme.js" defer></script>
+    <script type="module" src="notification.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="javascript:history.back()" class="back-button">← Back</a>
+        <div class="logo"> 
+            <img src="kfgc.jpg" alt="Church Logo">
+        </div>
+
+<p id="notificationStatus"></p>
+    </header>
+
+        <!-- Hero Slider -->
+  <div class="hero">
+    <div class="hero-inner">
+        <div class="slides" role="region" aria-live="polite">
+          <article class="slide" data-index="0">
+            <img src="grow.jpg" alt="Grow in faith and community" loading="lazy">
+            <h2>Grow in Faith & Community</h2>
+           </article>
+
+          <article class="slide" data-index="1">
+            <img src="worship.jpg" alt="Worship together" loading="lazy">
+            <h2>Worship Together</h2>
+       </article>
+
+          <article class="slide" data-index="2">
+            <img src="bible.jpg" alt="Bible study and prayer" loading="lazy">
+            <h2>Bible Study & Prayer</h2>
+            </article>
+
+          <article class="slide" data-index="3">
+            <img src="youths-ministry.jpg" alt="Youths ministry" loading="lazy">
+            <h2>Youth Ministry</h2>
+           </article>
+
+          <article class="slide" data-index="4">
+            <img src="children.jpg" alt="Children ministry" loading="lazy">
+            <h2>Children's Ministry</h2>
+           </article>
+
+          <article class="slide" data-index="5">
+            <img src="praise.jpg" alt="Praise and worship ministry" loading="lazy">
+            <h2>Praise & Worship</h2>
+             </article>
+
+          <article class="slide" data-index="6">
+            <img src="women.jpg" alt="Women's ministry" loading="lazy">
+            <h2>Women's Ministry</h2>
+          </article>
+
+          <article class="slide" data-index="7">
+            <img src="evangelism.jpg" alt="Evangelism ministry" loading="lazy">
+            <h2>Evangelism</h2>
+        </article>
+        </div>    
+        <div>
+        </div>
+      
+      </section>
+    </div>
+  </div>
+  
+    <!-- About Us -->
+
+    <section class="about-us">
+        <button id="enableNotifications">
+  <i class="fa-solid fa-bell"></i>
+  Enable KFGC Notifications
+</button>
+
+<p id="notificationStatus"></p>
+        
+        <h1>NOTIFICATIONS</h1>
+        <p>
+            COMING SOON......
+        </p>
+    </section>
+
+   
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            Follow us on 
+            <a href="https://whatsapp.com/channel/0029VaoQRhnHwXb9FX0Ub503">WhatsApp</a> |
+            <a href="https://www.youtube.com/@KIRINDAFULLGOSPELCHURCHNYENDO">YouTube</a> |
+             <a href="https://www.facebook.com/profile.php?id=61579066273777">Facebook</a> |  
+            <a href="https://t.me/+wJRnn7SQvehhZTFk">Telegram</a> |
+            <a href="https://www.tiktok.com/@kirindafullgospel">TikTok</a>
+        </p>
+        <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
+    </footer>
+
+<script>
+import {
+  enableNotifications
+} from "./notification.js";
+
+
+const button =
+  document.getElementById(
+    "enableNotifications"
+  );
+
+const status =
+  document.getElementById(
+    "notificationStatus"
+  );
+
+
+button?.addEventListener(
+  "click",
+  async () => {
+
+    button.disabled = true;
+
+    button.textContent =
+      "Enabling notifications...";
+
+
+    const token =
+      await enableNotifications();
+
+
+    if (token) {
+
+      status.textContent =
+        "Notifications are enabled. You will receive KFGC announcements.";
+
+      button.textContent =
+        "✓ Notifications Enabled";
+
+    } else {
+
+      status.textContent =
+        "Notifications were not enabled.";
+
+      button.disabled = false;
+
+      button.textContent =
+        "Enable KFGC Notifications";
+
+    }
+
+  }
+);
+</script>
+    <style>
+
+
+    /* =========================================================
+   KFGC MEDIA APP — general-styles.css
+   About Us Page Styling
+   Theme: Navy Blue & Gold
+   ========================================================= */
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, Arial, sans-serif;
+  background: #f5f7fa;
+  color: #1f2937;
+  line-height: 1.7;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #08203a;
+  color: #ffffff;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.back-button {
+    left: 10px;
+  color: #d9a441;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.logo img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ===== HERO IMAGE ===== */
+.hero {
+  position: relative;
+  height: 45vh;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== SECTION BASE ===== */
+.about-us,
+.content-section {
+  max-width: 900px;
+  margin: auto;
+  padding: 2.5rem 1.2rem;
+  background: #ffffff;
+  margin-top: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* First section spacing fix */
+.about-us {
+  margin-top: -3rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== HEADINGS ===== */
+.about-us h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #08203a;
+  text-align: center;
+}
+
+.content-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  color: #08203a;
+  border-left: 4px solid #d9a441;
+  padding-left: 0.6rem;
+}
+
+/* ===== TEXT ===== */
+.about-us p,
+.content-section p {
+  color: #374151;
+  margin-bottom: 0.8rem;
+}
+
+/* ===== LISTS ===== */
+.content-section ul {
+  padding-left: 1.2rem;
+}
+
+.content-section li {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+/* ===== THANK YOU TEXT ===== */
+body > p {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.2rem;
+  color: #374151;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: #06182c;
+  color: #ffffff;
+  padding: 2rem 1rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.footer a {
+  color: #d9a441;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .about-us h1 {
+    font-size: 1.8rem;
+  }
+
+  .content-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero {
+    height: 35vh;
+  }
+}
+    
+    </style>
+</body>
+            </html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sermons-KFGC MEDIA APP</title>
+    <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<link rel="stylesheet" href="general-styles.css">
+<link rel="stylesheet" href="sermons.css">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <a href="javascript:history.back()" class="back-button">← Back</a>
+    <div class="logo">
+        <img src="kfgc.jpg" alt="Church Logo">
+    </div>
+</header>
+
+<!-- Slider / FAQ Section -->
+<div class="slider-container" id="slider">
+
+    <!-- Slide 1 -->
+    <h1>Watch Our Latest </h1>
+    <div class="slide">
+        <h1>Watch Our Latest Videos</h1>
+        <p>Stay connected with our church through our latest messages, worship sessions, and live streams.</p>
+        <a href="#" class="btn" onclick="toggleMoreDetails(event)">More Details</a>
+
+        <div id="MoreDetailsContent" class="hidden-content">
+            <p>Join us for weekly services, Bible studies, and special events designed to uplift and inspire.</p>
+        </div>
+
+        <!-- YouTube Player -->
+        <div class="youtube-container">
+            <iframe
+                id="youtubePlayer"
+                src="https://www.youtube.com/embed/Y7wPDBjpPn8"
+                title="KFGC Sermon"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- Sermons Controls -->
+        <div class="sermon-controls">
+            <input type="text" id="sermonSearch" placeholder="Search sermons..." onkeyup="filterSermons()" />
+            <select id="categoryFilter" onchange="filterSermons()">
+                <option value="all">All Sermons</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="pastor">Pastor</option>
+                <option value="guest">Guest Minister</option>
+            </select>
+        </div>
+
+        <!-- Sermon List -->
+        <div class="sermon-list" id="sermonList">
+
+            <div class="sermon-item" data-tags="faith pastor 2025"
+                 onclick="playSermon('Y7wPDBjpPn8')">
+                <img src="https://img.youtube.com/vi/Y7wPDBjpPn8/hqdefault.jpg">
+                <div>
+                    <strong>Sunday Service Sermon</strong>
+                    <small>Pastor • 2025</small>
+                </div>
+            </div>
+
+            <div class="sermon-item" data-tags="worship watunaaza church choir"
+                 onclick="playSermon('fCyk_a2bd0U')">
+                <img src="https://img.youtube.com/vi/fCyk_a2bd0U/hqdefault.jpg">
+                <div>
+                    <strong>Worship-Watunaaza</strong>
+                    <small>Church choir • 2025</small>
+                </div>
+            </div>
+
+            <div class="sermon-item" data-tags="holiness ev. kihumuro joseph guest 2025"
+                 onclick="playSermon('3GTqM_ZXS7A')">
+                <img src="https://img.youtube.com/vi/3GTqM_ZXS7A/hqdefault.jpg">
+                <div>
+                    <strong>Holiness.Ev kihumuro Joseph</strong>
+                    <small>Guest • 2025</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <h1>Watch Our Latest </h1>
+        <h1>Our Mission</h1>
+        <p>From humble beginnings, our mission has been to be a beacon of hope, embodying the teachings of Jesus.</p>
+        <a href="#" class="btn" onclick="toggleReadMore(event)">Read More</a>
+        <div id="ReadMoreContent" class="hidden-content">
+            <p>We focus on spiritual growth, community service, and fostering love among believers.</p>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <h1>Watch Our Latest </h1>
+        <h1>Welcome to KFGC MEDIA APP</h1>
+        <p>Our church is a welcoming community rooted in the love of Christ.</p>
+        <a href="#" class="btn" onclick="toggleLearnMore(event)">Learn More</a>
+        <div id="learnMoreContent" class="hidden-content">
+            <p>Join us for weekly services, Bible studies, and special events designed to uplift and inspire.</p>
+        </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>
+        Follow us on 
+        <a href="https://whatsapp.com/channel/0029VaoQRhnHwXb9FX0Ub503">WhatsApp</a> |
+        <a href="https://www.youtube.com/@KIRINDAFULLGOSPELCHURCHNYENDO">YouTube</a> |
+        <a href="https://www.facebook.com/profile.php?id=61579066273777">Facebook</a> | 
+        <a href="https://t.me/+wJRnn7SQvehhZTFk">Telegram</a> |
+        <a href="https://www.tiktok.com/@kirindafullgospel">TikTok</a>
+    </p>
+    <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
+</footer>
+
+<script src="sermons.js"></script>
+</body>
+    </html>

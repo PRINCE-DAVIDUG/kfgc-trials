@@ -15,7 +15,7 @@
    PWA CACHE
 ===================================================== */
 
-const CACHE_NAME = "kfgc-media-v2";
+const CACHE_NAME = "kfgc-media-v3";
 
 const APP_SHELL = [
   "./",

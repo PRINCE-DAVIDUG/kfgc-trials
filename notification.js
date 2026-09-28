@@ -18,6 +18,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+
 const VAPID_KEY =
   "BJuuZ6L63nLgdfYdl3_JgkE0WEhT1TU06nfnVAOYwcHa7EDAgpjXE_WoXpKnXY2wqbZccY1XHw5XrBvKU1FhiAo";
 
@@ -28,9 +29,9 @@ export async function enableNotifications() {
 
   try {
 
-    /* -----------------------------------------
-       Check browser support
-    ----------------------------------------- */
+    /* =========================================
+       Browser support
+    ========================================= */
 
     if (!("Notification" in window)) {
       throw new Error(
@@ -45,24 +46,14 @@ export async function enableNotifications() {
     }
 
 
-    /* -----------------------------------------
-       Check permission
-    ----------------------------------------- */
-
-    console.log(
-      "[KFGC] Permission:",
-      Notification.permission
-    );
+    /* =========================================
+       Permission
+    ========================================= */
 
     if (Notification.permission !== "granted") {
 
       const permission =
         await Notification.requestPermission();
-
-      console.log(
-        "[KFGC] Permission result:",
-        permission
-      );
 
       if (permission !== "granted") {
         throw new Error(
@@ -72,26 +63,49 @@ export async function enableNotifications() {
     }
 
 
-    /* -----------------------------------------
-       Get the existing KFGC service worker
-    ----------------------------------------- */
+    console.log(
+      "[KFGC] Notification permission granted."
+    );
+
+
+    /* =========================================
+       Register the ONE KFGC service worker
+    ========================================= */
 
     console.log(
-      "[KFGC] Waiting for service worker..."
+      "[KFGC] Registering existing KFGC service worker..."
     );
 
     const registration =
-      await navigator.serviceWorker.ready;
+      await navigator.serviceWorker.register(
+        "./sw.js",
+        {
+          scope: "./"
+        }
+      );
+
 
     console.log(
-      "[KFGC] Service worker ready:",
+      "[KFGC] Service worker registration:",
       registration.scope
     );
 
 
-    /* -----------------------------------------
-       Verify Firebase Messaging
-    ----------------------------------------- */
+    /* =========================================
+       Wait until service worker is ready
+    ========================================= */
+
+    await navigator.serviceWorker.ready;
+
+
+    console.log(
+      "[KFGC] Service worker is ready."
+    );
+
+
+    /* =========================================
+       Firebase Messaging
+    ========================================= */
 
     if (!messaging) {
       throw new Error(
@@ -99,24 +113,26 @@ export async function enableNotifications() {
       );
     }
 
-    console.log(
-      "[KFGC] Firebase Messaging initialized."
-    );
-
-
-    /* -----------------------------------------
-       Request FCM token
-    ----------------------------------------- */
 
     console.log(
       "[KFGC] Requesting FCM token..."
     );
 
+
+    /* =========================================
+       Generate FCM token
+    ========================================= */
+
     const token =
-      await getToken(messaging, {
-        vapidKey: VAPID_KEY,
-        serviceWorkerRegistration: registration
-      });
+      await getToken(
+        messaging,
+        {
+          vapidKey: VAPID_KEY,
+          serviceWorkerRegistration:
+            registration
+        }
+      );
+
 
     console.log(
       "[KFGC] getToken() completed."
@@ -131,17 +147,18 @@ export async function enableNotifications() {
 
 
     console.log(
-      "[KFGC] FCM token successfully generated."
+      "[KFGC] FCM token generated successfully."
     );
 
 
-    /* -----------------------------------------
+    /* =========================================
        Save token to Firestore
-    ----------------------------------------- */
+    ========================================= */
 
     console.log(
       "[KFGC] Saving token to Firestore..."
     );
+
 
     await setDoc(
       doc(
@@ -152,8 +169,10 @@ export async function enableNotifications() {
       {
         token: token,
         platform: "web",
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        createdAt:
+          serverTimestamp(),
+        updatedAt:
+          serverTimestamp()
       },
       {
         merge: true
@@ -165,8 +184,8 @@ export async function enableNotifications() {
       "[KFGC] FCM token saved to Firestore."
     );
 
-    return token;
 
+    return token;
 
   } catch (error) {
 
@@ -175,14 +194,14 @@ export async function enableNotifications() {
       error
     );
 
-    return null;
+    throw error;
   }
 }
 
 
-/* -----------------------------------------
+/* =========================================
    Foreground messages
------------------------------------------ */
+========================================= */
 
 onMessage(
   messaging,
@@ -193,15 +212,18 @@ onMessage(
       payload
     );
 
+
     const title =
       payload.notification?.title ||
       payload.data?.title ||
       "KFGC Media App";
 
+
     const body =
       payload.notification?.body ||
       payload.data?.body ||
       "You have a new KFGC update.";
+
 
     const url =
       payload.data?.url ||
@@ -209,7 +231,8 @@ onMessage(
 
 
     if (
-      Notification.permission === "granted"
+      Notification.permission ===
+      "granted"
     ) {
 
       const notification =
@@ -217,7 +240,8 @@ onMessage(
           title,
           {
             body: body,
-            icon: "./icons/icon-192.png",
+            icon:
+              "./icons/icon-192.png",
             data: {
               url: url
             }
@@ -226,9 +250,7 @@ onMessage(
 
 
       notification.onclick = () => {
-
         window.location.href = url;
-
       };
 
     }

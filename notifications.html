@@ -1,320 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications-KFGC MEDIA APP</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Main script -->
-  <script src="script.js" defer></script>
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
- <!-- Favicon -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Notifications - KFGC MEDIA APP</title>
+
+  <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-<script src="theme.js" defer></script>
-    <script type="module" src="notification.js"></script>
+
+  <script src="script.js" defer></script>
+  <script src="theme.js" defer></script>
+
+  <style>
+    .diagnostic {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.12);
+    }
+
+    .diagnostic h2 {
+      color: #08203a;
+      margin-bottom: 15px;
+    }
+
+    .diagnostic-line {
+      padding: 10px;
+      margin: 7px 0;
+      border-radius: 8px;
+      background: #f1f5f9;
+      word-break: break-word;
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .failure {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .working {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    #diagnosticError {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    #enableNotifications {
+      display: block;
+      margin: 20px auto;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 10px;
+      background: #08203a;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #enableNotifications:disabled {
+      opacity: .7;
+      cursor: wait;
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <a href="javascript:history.back()" class="back-button">← Back</a>
-        <div class="logo"> 
-            <img src="kfgc.jpg" alt="Church Logo">
-        </div>
-    </header>
+<header class="header">
 
-        <!-- Hero Slider -->
-  <div class="hero">
-    <div class="hero-inner">
-        <div class="slides" role="region" aria-live="polite">
-          <article class="slide" data-index="0">
-            <img src="grow.jpg" alt="Grow in faith and community" loading="lazy">
-            <h2>Grow in Faith & Community</h2>
-           </article>
+  <a href="javascript:history.back()" class="back-button">
+    ← Back
+  </a>
 
-          <article class="slide" data-index="1">
-            <img src="worship.jpg" alt="Worship together" loading="lazy">
-            <h2>Worship Together</h2>
-       </article>
-
-          <article class="slide" data-index="2">
-            <img src="bible.jpg" alt="Bible study and prayer" loading="lazy">
-            <h2>Bible Study & Prayer</h2>
-            </article>
-
-          <article class="slide" data-index="3">
-            <img src="youths-ministry.jpg" alt="Youths ministry" loading="lazy">
-            <h2>Youth Ministry</h2>
-           </article>
-
-          <article class="slide" data-index="4">
-            <img src="children.jpg" alt="Children ministry" loading="lazy">
-            <h2>Children's Ministry</h2>
-           </article>
-
-          <article class="slide" data-index="5">
-            <img src="praise.jpg" alt="Praise and worship ministry" loading="lazy">
-            <h2>Praise & Worship</h2>
-             </article>
-
-          <article class="slide" data-index="6">
-            <img src="women.jpg" alt="Women's ministry" loading="lazy">
-            <h2>Women's Ministry</h2>
-          </article>
-
-          <article class="slide" data-index="7">
-            <img src="evangelism.jpg" alt="Evangelism ministry" loading="lazy">
-            <h2>Evangelism</h2>
-        </article>
-        </div>    
-        <div>
-        </div>
-      
-      </section>
-    </div>
+  <div class="logo">
+    <img src="kfgc.jpg" alt="Church Logo">
   </div>
-  
-    <!-- About Us -->
 
-    <section class="about-us">
-        <button id="enableNotifications">
-  <i class="fa-solid fa-bell"></i>
-  Enable KFGC Notifications
-</button>
+</header>
 
-<p id="notificationStatus"></p>
-        
-        <h1>NOTIFICATIONS</h1>
-        <p>
-            COMING SOON......
-        </p>
-    </section>
 
-   
-    <!-- Footer -->
-    <footer class="footer">
-        <p>
-            Follow us on 
-            <a href="https://whatsapp.com/channel/0029VaoQRhnHwXb9FX0Ub503">WhatsApp</a> |
-            <a href="https://www.youtube.com/@KIRINDAFULLGOSPELCHURCHNYENDO">YouTube</a> |
-             <a href="https://www.facebook.com/profile.php?id=61579066273777">Facebook</a> |  
-            <a href="https://t.me/+wJRnn7SQvehhZTFk">Telegram</a> |
-            <a href="https://www.tiktok.com/@kirindafullgospel">TikTok</a>
-        </p>
-        <p>&copy; 2026 KFGC MEDIA APP. All Rights Reserved.</p>
-    </footer>
+<div class="hero">
+
+  <div class="hero-inner">
+
+    <div class="slides">
+
+      <article class="slide">
+        <img src="grow.jpg" alt="Grow in faith and community">
+        <h2>Grow in Faith & Community</h2>
+      </article>
+
+      <article class="slide">
+        <img src="worship.jpg" alt="Worship together">
+        <h2>Worship Together</h2>
+      </article>
+
+      <article class="slide">
+        <img src="bible.jpg" alt="Bible study and prayer">
+        <h2>Bible Study & Prayer</h2>
+      </article>
+
+      <article class="slide">
+        <img src="youths-ministry.jpg" alt="Youth ministry">
+        <h2>Youth Ministry</h2>
+      </article>
+
+      <article class="slide">
+        <img src="children.jpg" alt="Children ministry">
+        <h2>Children's Ministry</h2>
+      </article>
+
+      <article class="slide">
+        <img src="praise.jpg" alt="Praise and worship">
+        <h2>Praise & Worship</h2>
+      </article>
+
+      <article class="slide">
+        <img src="women.jpg" alt="Women's ministry">
+        <h2>Women's Ministry</h2>
+      </article>
+
+      <article class="slide">
+        <img src="evangelism.jpg" alt="Evangelism ministry">
+        <h2>Evangelism</h2>
+      </article>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<section class="about-us">
+
+  <button id="enableNotifications">
+    🔔 Enable KFGC Notifications
+  </button>
+
+  <p id="notificationStatus"></p>
+
+  <h1>NOTIFICATIONS</h1>
+
+  <p>
+    Enable notifications to receive announcements,
+    sermons, events and other KFGC updates.
+  </p>
+
+</section>
+
+
+<!-- ================================
+     FCM DIAGNOSTIC PANEL
+================================ -->
+
+<section class="diagnostic">
+
+  <h2>FCM Diagnostic</h2>
+
+  <div id="browserCheck" class="diagnostic-line working">
+    ⏳ Checking browser...
+  </div>
+
+  <div id="notificationCheck" class="diagnostic-line working">
+    ⏳ Checking notifications...
+  </div>
+
+  <div id="serviceWorkerCheck" class="diagnostic-line working">
+    ⏳ Checking service worker...
+  </div>
+
+  <div id="firebaseCheck" class="diagnostic-line working">
+    ⏳ Checking Firebase...
+  </div>
+
+  <div id="tokenCheck" class="diagnostic-line working">
+    ⏳ Waiting for notification test...
+  </div>
+
+  <div id="firestoreCheck" class="diagnostic-line working">
+    ⏳ Waiting for Firestore test...
+  </div>
+
+  <div id="diagnosticError" class="diagnostic-line failure" style="display:none;">
+  </div>
+
+</section>
+
+
+<footer class="footer">
+
+  <p>
+    Follow us on
+
+    <a href="https://whatsapp.com/channel/0029VaoQRhnHwXb9FX0Ub503">
+      WhatsApp
+    </a> |
+
+    <a href="https://www.youtube.com/@KIRINDAFULLGOSPELCHURCHNYENDO">
+      YouTube
+    </a> |
+
+    <a href="https://www.facebook.com/profile.php?id=61579066273777">
+      Facebook
+    </a> |
+
+    <a href="https://t.me/+wJRnn7SQvehhZTFk">
+      Telegram
+    </a> |
+
+    <a href="https://www.tiktok.com/@kirindafullgospel">
+      TikTok
+    </a>
+
+  </p>
+
+  <p>
+    &copy; 2026 KFGC MEDIA APP. All Rights Reserved.
+  </p>
+
+</footer>
+
+
 <script type="module">
-  import { enableNotifications } from "./notification.js";
 
-  const button =
-    document.getElementById("enableNotifications");
+import {
+  enableNotifications
+} from "./notification.js";
 
-  const status =
-    document.getElementById("notificationStatus");
+import {
+  messaging,
+  db
+} from "./firebase.js";
 
-  button?.addEventListener("click", async () => {
 
-    button.disabled = true;
-    button.innerHTML =
-      "Enabling notifications...";
+const button =
+  document.getElementById("enableNotifications");
+
+const status =
+  document.getElementById("notificationStatus");
+
+
+const browserCheck =
+  document.getElementById("browserCheck");
+
+const notificationCheck =
+  document.getElementById("notificationCheck");
+
+const serviceWorkerCheck =
+  document.getElementById("serviceWorkerCheck");
+
+const firebaseCheck =
+  document.getElementById("firebaseCheck");
+
+const tokenCheck =
+  document.getElementById("tokenCheck");
+
+const firestoreCheck =
+  document.getElementById("firestoreCheck");
+
+const diagnosticError =
+  document.getElementById("diagnosticError");
+
+
+/* =========================================
+   Browser
+========================================= */
+
+if (
+  "Notification" in window &&
+  "serviceWorker" in navigator
+) {
+
+  browserCheck.textContent =
+    "✓ Browser supports notifications and service workers.";
+
+  browserCheck.className =
+    "diagnostic-line success";
+
+} else {
+
+  browserCheck.textContent =
+    "✗ Browser does not support the required features.";
+
+  browserCheck.className =
+    "diagnostic-line failure";
+
+}
+
+
+/* =========================================
+   Notification permission
+========================================= */
+
+if ("Notification" in window) {
+
+  notificationCheck.textContent =
+    "Notification permission: " +
+    Notification.permission;
+
+  notificationCheck.className =
+    "diagnostic-line " +
+    (
+      Notification.permission === "granted"
+        ? "success"
+        : "working"
+    );
+
+}
+
+
+/* =========================================
+   Service worker
+========================================= */
+
+if ("serviceWorker" in navigator) {
+
+  navigator.serviceWorker.ready
+    .then(registration => {
+
+      serviceWorkerCheck.textContent =
+        "✓ Service worker ready: " +
+        registration.scope;
+
+      serviceWorkerCheck.className =
+        "diagnostic-line success";
+
+    })
+    .catch(error => {
+
+      serviceWorkerCheck.textContent =
+        "✗ Service worker error.";
+
+      serviceWorkerCheck.className =
+        "diagnostic-line failure";
+
+      showError(error);
+
+    });
+
+}
+
+
+/* =========================================
+   Firebase
+========================================= */
+
+try {
+
+  if (messaging && db) {
+
+    firebaseCheck.textContent =
+      "✓ Firebase Messaging and Firestore initialized.";
+
+    firebaseCheck.className =
+      "diagnostic-line success";
+
+  } else {
+
+    throw new Error(
+      "Firebase Messaging or Firestore is unavailable."
+    );
+
+  }
+
+} catch (error) {
+
+  firebaseCheck.textContent =
+    "✗ Firebase initialization failed.";
+
+  firebaseCheck.className =
+    "diagnostic-line failure";
+
+  showError(error);
+
+}
+
+
+/* =========================================
+   Notification button
+========================================= */
+
+button.addEventListener("click", async () => {
+
+  button.disabled = true;
+
+  button.textContent =
+    "Enabling notifications...";
+
+  status.textContent =
+    "Please wait...";
+
+
+  tokenCheck.textContent =
+    "⏳ Requesting FCM token...";
+
+  tokenCheck.className =
+    "diagnostic-line working";
+
+
+  firestoreCheck.textContent =
+    "⏳ Waiting for token...";
+
+  firestoreCheck.className =
+    "diagnostic-line working";
+
+
+  diagnosticError.style.display =
+    "none";
+
+
+  try {
 
     const token =
       await enableNotifications();
 
-    if (token) {
 
-      status.textContent =
-        "Notifications are enabled. You will receive KFGC announcements.";
+    if (!token) {
 
-      button.innerHTML =
-        "✓ Notifications Enabled";
+      tokenCheck.textContent =
+        "✗ FCM token was not generated.";
 
-    } else {
+      tokenCheck.className =
+        "diagnostic-line failure";
 
       status.textContent =
         "Notifications were not enabled.";
 
       button.disabled = false;
 
-      button.innerHTML =
-        '<i class="fa-solid fa-bell"></i> Enable KFGC Notifications';
+      button.textContent =
+        "🔔 Enable KFGC Notifications";
+
+      return;
+
     }
 
-  });
+
+    tokenCheck.textContent =
+      "✓ FCM token generated successfully.";
+
+    tokenCheck.className =
+      "diagnostic-line success";
+
+
+    firestoreCheck.textContent =
+      "✓ Notification token was saved to Firestore.";
+
+    firestoreCheck.className =
+      "diagnostic-line success";
+
+
+    status.textContent =
+      "✓ Notifications are enabled.";
+
+    button.textContent =
+      "✓ Notifications Enabled";
+
+
+  } catch (error) {
+
+    console.error(
+      "[KFGC Diagnostic]",
+      error
+    );
+
+    showError(error);
+
+
+    status.textContent =
+      "Notification setup failed.";
+
+    button.disabled = false;
+
+    button.textContent =
+      "🔔 Enable KFGC Notifications";
+
+  }
+
+});
+
+
+/* =========================================
+   Error display
+========================================= */
+
+function showError(error) {
+
+  diagnosticError.style.display =
+    "block";
+
+  diagnosticError.textContent =
+    "ERROR:\n\n" +
+    (
+      error?.stack ||
+      error?.message ||
+      String(error)
+    );
+
+}
+
 </script>
-    <style>
 
-
-    /* =========================================================
-   KFGC MEDIA APP — general-styles.css
-   About Us Page Styling
-   Theme: Navy Blue & Gold
-   ========================================================= */
-
-/* ===== RESET ===== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, Arial, sans-serif;
-  background: #f5f7fa;
-  color: #1f2937;
-  line-height: 1.7;
-}
-
-/* ===== HEADER ===== */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #08203a;
-  color: #ffffff;
-  padding: 0.8rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 50%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-}
-
-.back-button {
-    left: 10px;
-  color: #d9a441;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.back-button:hover {
-  text-decoration: underline;
-}
-
-.logo img {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* ===== HERO IMAGE ===== */
-.hero {
-  position: relative;
-  height: 45vh;
-  overflow: hidden;
-}
-
-.hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ===== SECTION BASE ===== */
-.about-us,
-.content-section {
-  max-width: 900px;
-  margin: auto;
-  padding: 2.5rem 1.2rem;
-  background: #ffffff;
-  margin-top: 1.5rem;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-/* First section spacing fix */
-.about-us {
-  margin-top: -3rem;
-  position: relative;
-  z-index: 2;
-}
-
-/* ===== HEADINGS ===== */
-.about-us h1 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  color: #08203a;
-  text-align: center;
-}
-
-.content-section h2 {
-  font-size: 1.6rem;
-  margin-bottom: 0.8rem;
-  color: #08203a;
-  border-left: 4px solid #d9a441;
-  padding-left: 0.6rem;
-}
-
-/* ===== TEXT ===== */
-.about-us p,
-.content-section p {
-  color: #374151;
-  margin-bottom: 0.8rem;
-}
-
-/* ===== LISTS ===== */
-.content-section ul {
-  padding-left: 1.2rem;
-}
-
-.content-section li {
-  margin-bottom: 0.5rem;
-  color: #1f2937;
-}
-
-/* ===== THANK YOU TEXT ===== */
-body > p {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1.2rem;
-  color: #374151;
-  text-align: center;
-  font-style: italic;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  background: #06182c;
-  color: #ffffff;
-  padding: 2rem 1rem;
-  text-align: center;
-  margin-top: 3rem;
-}
-
-.footer a {
-  color: #d9a441;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-.footer p {
-  font-size: 0.9rem;
-  margin-top: 0.6rem;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 600px) {
-  .about-us h1 {
-    font-size: 1.8rem;
-  }
-
-  .content-section h2 {
-    font-size: 1.4rem;
-  }
-
-  .hero {
-    height: 35vh;
-  }
-}
-    
-    </style>
 </body>
-            </html>
+    </html>

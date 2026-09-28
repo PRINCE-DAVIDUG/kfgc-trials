@@ -1,5 +1,5 @@
 // KFGC Media App — Firebase Cloud Messaging
-
+console.log("KFGC notification.js LOADED");
 import {
   getToken,
   onMessage
